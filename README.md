@@ -1,16 +1,31 @@
 # LANDSAT vs COPERNICUS Workshop
 
-This GitHub repository will help you understand a comparison between Landsat and Copernicus using the use case of Heat Island. We will use Landsat 8 and Copernicus 3 as satellite data and will use Google Earth Engine and Copernicus API as data sources. Before we start, you need to have an account on [https://dataspace.copernicus.eu/](https://dataspace.copernicus.eu/), to validate the account through email, and to remember your username and password.
+This GitHub repository will help you understand a comparison between **Landsat** and **Copernicus** using the use case of **Heat Island**. We will use **Landsat 8** and **Copernicus 3** as satellite data and will use **Google Earth Engine** and the **Copernicus API** as data sources.
 
-All the code is meant to work on Linux subsystems, so if you are using Windows, we recommend you install WSL: [https://learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install). You will need to have Python 3 installed on your computer and the following libraries:
+**Prerequisites**:
+1. Create an account on [https://dataspace.copernicus.eu/](https://dataspace.copernicus.eu/).
+2. Validate the account through email.
+3. Remember your username and password.
 
-- earthengine-api
-- folium
-- geemap
-- geojson
-- numpy
-- requests
-- shapely
-- xarray
+**Platform Requirements**:
+This code is optimized to work on **Linux subsystems**. If you are using Windows, it is recommended to install **WSL** (Windows Subsystem for Linux): [https://learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-We hope that you enjoy this, and for any other questions, please contact the speaker at: simonel.david@rospin.org
+### Required Libraries
+You will need **Python 3** installed on your computer and the following libraries:
+
+- `earthengine-api`
+- `folium`
+- `geemap`
+- `geojson`
+- `numpy`
+- `requests`
+- `shapely`
+- `xarray`
+
+To install these libraries, you can use:
+```bash
+pip install -r requirements.txt
+
+We hope that you enjoy this workshop! For any questions, please contact the speaker at: simonel.david@rospin.org.
+
+**Property of AIM Space**
