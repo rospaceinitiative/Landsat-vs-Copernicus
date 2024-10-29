@@ -25,7 +25,7 @@ You will need **Python 3** installed on your computer and the following librarie
 To install these libraries, you can use:
 ```bash
 pip install -r requirements.txt
-
+```
 We hope that you enjoy this workshop! For any questions, please contact the speaker at: simonel.david@rospin.org.
 
 **Property of AIM Space**
