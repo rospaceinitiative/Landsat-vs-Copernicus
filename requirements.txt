@@ -1,0 +1,8 @@
+earthengine-api
+folium
+geemap
+geojson
+numpy
+requests
+shapely
+xarray

@@ -3,24 +3,24 @@ import requests
 import zipfile
 from shapely.geometry import box
 
-# Set your Copernicus Data Space credentials and client ID
-USERNAME = "simoneldavid17@gmail.com"  # Replace with your username
-PASSWORD = "simonelD700!"               # Replace with your password
+# Define credentials and client ID for accessing Copernicus Data Space
+USERNAME = "your_username"  # Replace with actual username
+PASSWORD = "your_password"  # Replace with actual password
 CLIENT_ID = "cdse-public"
 
-# Directory to save downloaded files
-DOWNLOAD_DIR = "downloaded_products"
+# Set up directory for downloaded Copernicus LST data files
+DOWNLOAD_DIR = "copernicus_data"
 if not os.path.exists(DOWNLOAD_DIR):
     os.makedirs(DOWNLOAD_DIR)
 
-# Define date range and AOI for Cluj-Napoca
+# Define date range and Area of Interest (AOI) for Cluj-Napoca using a hardcoded bounding box
 start_date = "2021-07-01"
 end_date = "2021-07-31"
-aoi = box(23.53618, 46.73862, 23.63058, 46.80108)  # Hardcoded bounding box for Cluj-Napoca
+aoi = box(23.53618, 46.73862, 23.63058, 46.80108)  # Cluj-Napoca bounding box coordinates
 aoi_wkt = aoi.wkt
 
+# Function to retrieve access and refresh tokens for authenticated Copernicus API requests
 def get_tokens():
-    """Retrieve access and refresh tokens."""
     token_url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
     response = requests.post(
         token_url,
@@ -37,8 +37,8 @@ def get_tokens():
     else:
         raise Exception("Failed to retrieve tokens:", response.status_code, response.text)
 
+# Function to refresh access token if it expires during the session
 def refresh_access_token(refresh_token):
-    """Use the refresh token to get a new access token."""
     token_url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
     response = requests.post(
         token_url,
@@ -53,21 +53,21 @@ def refresh_access_token(refresh_token):
     else:
         raise Exception("Failed to refresh access token:", response.status_code, response.text)
 
-# Get initial access and refresh tokens
+# Obtain initial tokens for accessing the Copernicus data
 access_token, refresh_token = get_tokens()
 headers = {"Authorization": f"Bearer {access_token}"}
-BASE_URL = "https://catalogue.dataspace.copernicus.eu/resto/api/collections/Sentinel3/search.json"
 
-# Set up query parameters with hardcoded dates and AOI
+# Define base URL for the Copernicus Data Space API and set up query parameters for LST data retrieval
+BASE_URL = "https://catalogue.dataspace.copernicus.eu/resto/api/collections/Sentinel3/search.json"
 query_params = {
     "startDate": start_date,
     "completionDate": end_date,
-    "productType": "SL_2_LST___",  # Sentinel-3 Level-2 Land Surface Temperature product
+    "productType": "SL_2_LST___",
     "geometry": aoi_wkt,
     "maxRecords": 10
 }
 
-# Make the search request
+# Perform search request to retrieve Sentinel-3 LST products for the specified date range and AOI
 response = requests.get(BASE_URL, params=query_params, headers=headers)
 if response.status_code == 200:
     results = response.json()
@@ -85,11 +85,12 @@ if response.status_code == 200:
             # Download each product
             download_response = session.get(download_url, stream=True)
             if download_response.status_code == 401:
-                # Refresh token if unauthorized
+                # Refresh token if unauthorized and retry download
                 access_token = refresh_access_token(refresh_token)
                 session.headers.update({"Authorization": f"Bearer {access_token}"})
                 download_response = session.get(download_url, stream=True)
 
+            # Save and extract downloaded products
             if download_response.status_code == 200:
                 zip_file_path = os.path.join(DOWNLOAD_DIR, f"{title}.zip")
                 with open(zip_file_path, "wb") as file:

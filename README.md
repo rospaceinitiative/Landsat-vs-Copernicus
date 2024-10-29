@@ -4,17 +4,13 @@ This GitHub repository will help you understand a comparison between Landsat and
 
 All the code is meant to work on Linux subsystems, so if you are using Windows, we recommend you install WSL: [https://learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install). You will need to have Python 3 installed on your computer and the following libraries:
 
-- ee
-- datetime
-- geemap
-- subprocess
-- json
-- time
-- sys
-- os
-- requests
+- earthengine-api
 - folium
-- shapely
+- geemap
+- geojson
 - numpy
+- requests
+- shapely
+- xarray
 
 We hope that you enjoy this, and for any other questions, please contact the speaker at: simonel.david@rospin.org
